@@ -39,42 +39,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-var info = new OpenApiInfo()
-{
-    Version = "v1",
-    Title = "Minimal API - JWT Authentication with Swagger demo",
-    Description = "Implementing JWT Authentication in Minimal API",
-    TermsOfService = new Uri("http://www.example.com")
-};
-var securityScheme = new OpenApiSecurityScheme()
-{
-    Name = "Authorization",
-    Type = SecuritySchemeType.ApiKey,
-    Scheme = "Bearer",
-    BearerFormat = "JWT",
-    In = ParameterLocation.Header,
-    Description = "JSON Web Token based security",
-};
-var securityReq = new OpenApiSecurityRequirement()
-{
-    {
-        new OpenApiSecurityScheme
-        {
-            Reference = new OpenApiReference
-            {
-                Type = ReferenceType.SecurityScheme,
-                Id = "Bearer"
-            }
-        },
-        new string[] {}
-    }
-};
-builder.Services.AddSwaggerGen(o =>
-{
-    o.SwaggerDoc("v1", info);
-    o.AddSecurityDefinition("Bearer", securityScheme);
-    o.AddSecurityRequirement(securityReq);
-});
+builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 app.UseAuthentication();
